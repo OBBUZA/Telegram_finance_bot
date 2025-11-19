@@ -131,6 +131,3 @@ class FinanceAnalyzer:
 
         report += (f"\nРекомендация: {self.recommendation()}\n")
         return report
-
-a = FinanceAnalyzer("finance_data_finished.csv")
-print(a.full_report())
