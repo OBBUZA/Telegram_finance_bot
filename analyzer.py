@@ -1,7 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-
 class FinanceAnalyzer:
     def __init__(self, csv_path="finance_data_finished.csv"):   #Загрузка и первичная обработка данных
         self.data = pd.read_csv(csv_path)
@@ -11,7 +10,7 @@ class FinanceAnalyzer:
    
     # 1. Сумма доходов и расходов по дням
     def daily_stats(self):
-        return (self.data.groupby(["date", "type"])["amount"].sum().unstack().fillna(0))  # Таблица доходов / расходов 
+        return (self.data.groupby(["date", "type"])["amount"].sum().fillna(0))  # Таблица доходов / расходов 
    
     # 2. Топ-n категорий расходов (по умолчанию 3)
     def top_categories_waste(self, n=3):
@@ -130,3 +129,6 @@ class FinanceAnalyzer:
 
         report += (f"\nРекомендация: {self.recommendation()}\n")
         return report
+    
+#a = FinanceAnalyzer("finance_data_finished.csv")
+#print(a.full_report())
