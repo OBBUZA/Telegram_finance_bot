@@ -52,6 +52,7 @@ class FinanceAnalyzer:
 
         return output
     
+    # График доходов/расходов по времени с балансом
     def plot_statistics_with_balance(self, output="finance_plot_balance.png"):
         daily = self.daily_stats()
         daily["баланс"] = (daily["доход"] - daily["расход"]).cumsum()
@@ -65,6 +66,37 @@ class FinanceAnalyzer:
         plt.ylabel("Сумма")
         plt.legend()
         plt.grid()
+        plt.tight_layout()
+        plt.savefig(output)
+        plt.close()
+
+        return output
+    
+    # Круговая диаграмма по категориям расходов
+    def plot_pie_categories(self, output="categories_pie.png"):
+        df_waste = self.data[self.data["type"] == "расход"]
+        cat_sum = df_waste.groupby("category")["amount"].sum()
+
+        plt.figure(figsize=(10, 10))
+        plt.pie(cat_sum, labels=cat_sum.index, autopct="%1.1f%%", startangle=90)
+        plt.title("Распределение расходов по категориям")
+        plt.tight_layout()
+        plt.savefig(output)
+        plt.close()
+
+        return output
+
+    # Гистограмма расходов по компаниям
+    def plot_bar_companies(self, n=10, output="companies_bar.png"):
+        df_waste = self.data[self.data["type"] == "расход"]
+        comp_sum = df_waste.groupby("company")["amount"].sum().sort_values(ascending=False).head(n)
+
+        plt.figure(figsize=(12, 6))
+        plt.bar(comp_sum.index, comp_sum.values)
+        plt.xticks(rotation=45, ha="right")
+        plt.title(f"Топ-{n} компаний по расходам")
+        plt.xlabel("Компания")
+        plt.ylabel("Сумма расходов")
         plt.tight_layout()
         plt.savefig(output)
         plt.close()
