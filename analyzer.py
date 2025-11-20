@@ -34,7 +34,6 @@ class FinanceAnalyzer:
         incomes = (df[df["type"] == "доход"].groupby("company")["amount"].sum().sort_values(ascending=False).head(n).to_dict())  # Словарь n компаний по доходам
         return (waste, incomes)
 
-
     # 6. График доходов/расходов по времени
     def plot_statistics(self, output="finance_plot.png"):
         daily = self.daily_stats()
@@ -90,7 +89,6 @@ class FinanceAnalyzer:
             )
         return "Финансовое состояние стабильное. Продолжайте в том же духе!"
 
-   
     # 8 Тотальный отчет по всем параметрам
     def full_report(self, days=30, top_comp=3):
         end = self.data["date"].max()
