@@ -10,7 +10,7 @@ class FinanceAnalyzer:
    
     # 1. Сумма доходов и расходов по дням
     def daily_stats(self):
-        return (self.data.groupby(["date", "type"])["amount"].sum().fillna(0))  # Таблица доходов / расходов 
+        return (self.data.groupby(["date", "type"])["amount"].sum().unstack().fillna(0))  # Таблица доходов / расходов 
    
     # 2. Топ-n категорий расходов (по умолчанию 3)
     def top_categories_waste(self, n=3):
@@ -93,7 +93,7 @@ class FinanceAnalyzer:
 
         plt.figure(figsize=(12, 6))
         plt.bar(comp_sum.index, comp_sum.values)
-        plt.xticks(rotation=45, ha="right")
+        plt.xticks(rotation=45)
         plt.title(f"Топ-{n} компаний по расходам")
         plt.xlabel("Компания")
         plt.ylabel("Сумма расходов")
@@ -159,6 +159,3 @@ class FinanceAnalyzer:
 
         report += (f"\nРекомендация: {self.recommendation()}\n")
         return report
-    
-#a = FinanceAnalyzer("finance_data_finished.csv")
-#print(a.full_report())
