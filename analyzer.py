@@ -2,8 +2,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 class FinanceAnalyzer:
-    def __init__(self, csv_path="finance_data_finished.csv"):   #Загрузка и первичная обработка данных
-        self.data = pd.read_csv(csv_path)
+    def __init__(self, data):   #Загрузка и первичная обработка данных
+        if isinstance(data, str):
+            self.data = pd.read_csv(data)
+        else:
+            self.data = data.copy()
 
         self.data["date"] = pd.to_datetime(self.data["date"])   # Приводим дату
         self.data.sort_values("date", inplace=True)
