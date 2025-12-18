@@ -1,5 +1,7 @@
 import os
+import requests
 import pandas as pd
+from io import BytesIO
 from analyzer import FinanceAnalyzer
 from telegram import Update, ReplyKeyboardMarkup
 from db import init_db, import_stock_csv, get_user_data, import_user_csv
@@ -169,8 +171,15 @@ async def recommendation_command(upd: Update, context: ContextTypes.DEFAULT_TYPE
     if not fin_anlz:
         await upd.message.reply_text("Нет данных")
         return
+    text, key = fin_anlz.recommendation()
+    await upd.message.reply_text(text)
+    if key == -1:
+        await upd.message.reply_photo(photo=get_http_cat_image(102))
+    elif key == 0:
+        await upd.message.reply_photo(photo=get_http_cat_image(200))
+    else:
+        await upd.message.reply_photo(photo=get_http_cat_image(402))
 
-    await upd.message.reply_text(fin_anlz.recommendation())
     return
 
 async def report_command(upd: Update, context: ContextTypes.DEFAULT_TYPE):         #12 Полный отчет по финансам
@@ -324,6 +333,16 @@ async def document_handler(upd: Update, context: ContextTypes.DEFAULT_TYPE):    
 💡 Рекомендация — Советы по улучшению финансов''', reply_markup=main_menu)
     return
 
+def get_http_cat_image(status_code: int) -> BytesIO | None:       # Получение изображения с http.cat по статус коду
+    url = f"https://http.cat/{status_code}.jpg"
+    response = requests.get(url, timeout=20)
+
+    if response.status_code != 200:
+        return None
+
+    img = BytesIO(response.content)
+    img.name = f"{status_code}.jpg"
+    return img
 
 def main():
     app = Application.builder().token(TOKEN).connect_timeout(30).read_timeout(30).build()
