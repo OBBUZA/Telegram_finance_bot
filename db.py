@@ -33,14 +33,7 @@ def import_stock_csv(csv_path):
             INSERT INTO {DEFAULT_TABLE}
             (user_id, date, category, amount, type, company)
             VALUES (?, ?, ?, ?, ?, ?)
-        """, (
-            None,
-            row["date"],
-            row["category"],
-            row["amount"],
-            row["type"],
-            row["company"]
-        ))
+        """, (None, row["date"], row["category"], row["amount"], row["type"], row["company"]))
 
     conn.commit()
     conn.close()
@@ -64,7 +57,7 @@ def import_user_csv(csv_path: str, user_id: int):
             INSERT INTO {DEFAULT_TABLE}
             (user_id, date, category, amount, type, company)
             VALUES (?, ?, ?, ?, ?, ?)""",
-            (user_id,row["date"],row["category"],row["amount"],row["type"],row["company"]))
+            (user_id, row["date"], row["category"], row["amount"], row["type"], row["company"]))
 
     conn.commit()
     conn.close()
