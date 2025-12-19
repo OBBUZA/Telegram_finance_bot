@@ -161,5 +161,6 @@ class FinanceAnalyzer:
         for comp, value in inc_comp.items():
             report += (f"  {comp}: {value:.2f} ₽\n")
 
-        report += (f"\nРекомендация: {self.recommendation()}\n")
+        text, key = self.recommendation()
+        report += (f"\nРекомендация: {text}\n")
         return report
