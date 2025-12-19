@@ -30,6 +30,6 @@ python bot.py
 
 Учебный / pet-проект для практики:
 
-* Telegram Bot API
+* Telegram Bot
 * анализа данных
 * работы с SQLite
