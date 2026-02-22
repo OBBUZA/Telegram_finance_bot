@@ -7,7 +7,7 @@ from telegram import Update, ReplyKeyboardMarkup
 from db import init_db, import_stock_csv, get_user_data, import_user_csv
 from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters
 
-TOKEN = "8319847829:AAFrL_cQ0qf9tRokwmLFutLaOCdArKVKD7c"
+TOKEN = "your token"
 main_menu = ReplyKeyboardMarkup([["📊 Анализ", "📈 Графики"],["📄 Полный отчёт", "💡 Рекомендация"], ["🔁 Сменить источник данных"]], resize_keyboard=True)
 analitics_menu = ReplyKeyboardMarkup([["₽ Топ расходов", "💰 Топ доходов"],["📉 Средняя трата", "🏢 Компании"],["⬅ Назад"]],resize_keyboard=True)
 graphs_menu = ReplyKeyboardMarkup([["📊 Доходы/Расходы", "📈 Доходы/Расходы c балансом"],["🥧 Категории", "🏢 Компании"],["⬅ Назад"]],resize_keyboard=True)
